@@ -1,32 +1,17 @@
 import { useState } from 'react'
-import { AcademicCapIcon, ChatIcon } from '@heroicons/react/solid'
 
 function App() {
   const [open, setOpen] = useState(true)
 
   const Menus = [
-    {
-      label: 'Academic',
-      active: true,
-      icon: (
-        <AcademicCapIcon
-          className={` text-primary cursor-pointer duration-500 ${
-            open && 'scale-100 h-8 w-8'
-          }`}
-        />
-      ),
-    },
-    {
-      label: 'Academic',
-      active: false,
-      icon: (
-        <AcademicCapIcon
-          className={` text-primary cursor-pointer duration-500 ${
-            open && 'scale-100 h-8 w-8'
-          }`}
-        />
-      ),
-    },
+    { title: 'Dashboard', src: 'Chart_fill', active: true },
+    { title: 'Inbox', src: 'Chat', active: false },
+    { title: 'Accounts', src: 'User', gap: true, active: false },
+    { title: 'Schedule ', src: 'Calendar', active: false },
+    { title: 'Search', src: 'Search', active: false },
+    { title: 'Analytics', src: 'Chart', active: false },
+    { title: 'Files ', src: 'Folder', gap: true, active: false },
+    { title: 'Setting', src: 'Setting', active: false },
   ]
 
   return (
@@ -34,7 +19,7 @@ function App() {
       <div
         className={`${
           open ? 'w-72' : 'w-20'
-        } duration-300 h-screen bg-dark-purple relative`}
+        } duration-300 h-screen bg-dark-purple relative border-r-2`}
       >
         <img
           src='./src/assets/control.png'
@@ -43,13 +28,13 @@ function App() {
           } duration-100 absolute cursor-pointer -right-3 top-24 w-7 border-2 border-dark-purple rounded-full hover:w-8`}
           onClick={() => setOpen(!open)}
         />
-        <div className='flex gap-x-3 items-center m-3 shadow-xl border border-primary rounded cursor-pointer'>
+        <div className={`${open ? '' : 'h-14'} flex gap-x-1 items-center m-3 shadow-xl border border-primary rounded cursor-pointer`}>
           <img
             src='./src/assets/ubaform-logo.png'
             className='cursor-pointer duration-500 w-14'
           />
           <h1
-            className={`text-primary origin-left font-medium text-2xl duration-300 ${
+            className={`text-primary origin-left font-medium text-xl duration-300 ${
               !open && 'scale-0'
             }`}
           >
@@ -57,24 +42,26 @@ function App() {
           </h1>
         </div>
         {/* LIST MENU */}
-        {Menus.map((menu) => {
-          return (
-            <>
-              <div className='flex items-center gap-x-3 p-5'>
-                {menu.icon}
-                <h1
-                  className={`${
-                    menu.active ? 'text-secondary' : 'text-primary '
-                  } origin-left font-medium text-xl duration-300 ${
-                    !open && 'scale-0'
-                  }`}
-                >
-                  {menu.label}
-                </h1>
-              </div>
-            </>
-          )
-        })}
+        <ul className={`${open ? 'p-6' : 'p-2 ml-2.5 mr-2.5'}`}>
+          {Menus.map((Menu, index) => (
+            <li
+              key={index}
+              className={`flex rounded-md p-2 cursor-pointer hover:bg-secondary hover:font-bold text-gray-300 text-sm items-center gap-x-4 
+              ${Menu.gap ? 'mt-9' : 'mt-2'} ${index === 0 && 'bg-secondary'} `}
+            >
+              <img src={`./src/assets/${Menu.src}.png`} />
+              <span
+                className={`${
+                  !open && 'hidden'
+                } origin-left hover:text-white duration-200 text-primary  ${
+                  Menu.active ? 'text-white font-bold' : ''
+                }`}
+              >
+                {Menu.title}
+              </span>
+            </li>
+          ))}
+        </ul>
         {/* <AcademicCapIcon
             className={` text-primary cursor-pointer duration-500 ${
               open && 'scale-100 h-8 w-8'
